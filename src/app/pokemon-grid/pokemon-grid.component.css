@@ -1,31 +1,52 @@
   
 
-/* Estilos para la tabla */
+.example-container {
+  flex: auto;
+  overflow: auto;
+}
+
+.mat-table {
+  width: 100%;
+}
+
 .pokemon-table {
   width: 100%;
-  border-collapse: collapse;
-  background-color: rgb(173, 173, 173);  /* Fondo negro para la tabla */
-}
+}	
 
-.pokemon-table th {
+
+/* Estilos para la tabla */
+.pokemon-table mat-header-row{
   text-align: center; 
-  background-color: #333;  /* Color gris oscuro para el encabezado */
-  color: white;  /* Texto blanco en el encabezado */
-  border-bottom: 2px solid #333;  /* Borde del encabezado */
-  padding: 8px;  /* Espaciado dentro del encabezado */
+  background-color: #333; /* Color gris oscuro para el encabezado */
+  color: white; /* Texto blanco en el encabezado */
+  border-bottom: 1px solid #a7a7a7; /* Borde entre filas */
+
+}
+.pokemon-table mat-row {
+  text-align: center; 
+  background-color: #ffffff; 
+  color: rgb(29, 29, 29); 
+  padding: 8px; 
 }
 
-.pokemon-table td {
-  text-align: center;  /* Alineación del texto al centro */
-  color: #55595C;  /* Color de texto para las celdas */
-  padding: 8px;  /* Espaciado dentro de las celdas */
-  background-color: rgb(255, 255, 255);  /* Fondo blanco para las celdas */
+.pokemon-table mat-cell {
+  text-align: center; /* Alineación del texto al centro */
+  color: #55595C; /* Color de texto para las celdas */
+  background-color: rgb(255, 255, 255); /* Fondo blanco para las celdas */
 }
 
-.pokemon-table tr.captured {
-  background-color: #A2FCBC;  /* Fondo verde para las filas capturadas */
+.pokemon-table mat-row.captured {
+  background-color: #A2FCBC; /* Fondo verde para las filas capturadas */
 }
 
-.pokemon-table tbody tr:hover {
-  background-color: #a1a1a1;  /* Color al pasar el mouse sobre las filas */
+.pokemon-table mat-row:not(.captured):hover {
+  background-color: #a1a1a1; /* Color al pasar el mouse sobre las filas */
 }
+
+.pokemon-table mat-row:hover {
+  background-color: #ffb4b4; /* Color al pasar el mouse sobre las filas */
+}
+
+
+
+

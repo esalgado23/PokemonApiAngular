@@ -1,20 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PokemonService } from '../pokemon.service';
-import { PokemonDetails } from '../pokemon-model';  
+import { PokemonDetails } from '../pokemon-model';
 import { HeaderComponent } from '../header/header.component';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { PokemonCaptureService } from '../pokemon-capture-service';
 @Component({
   selector: 'app-pokemon-grid',
   templateUrl: './pokemon-grid.component.html',
   styleUrls: ['./pokemon-grid.component.css']
 })
-export class PokemonGridComponent implements OnInit {
+export class PokemonGridComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['number', 'image', 'name', 'type'];
   dataSource = new MatTableDataSource<PokemonDetails>();
-  capturedPokemons: PokemonDetails[] = [];
   uniqueTypes: string[] = [];
   maxCaptures = 6;
   currentNameFilter: string = '';
@@ -22,11 +21,11 @@ export class PokemonGridComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  @ViewChild(HeaderComponent, { static: false }) headerComponent!: HeaderComponent;
-
-  
- 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private changeDetectorRefs: ChangeDetectorRef,
+    private pokemonCaptureService: PokemonCaptureService  // Inyecta el servicio de captura
+  ) {}
 
   ngOnInit() {
     this.loadPokemons();
@@ -35,9 +34,8 @@ export class PokemonGridComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.updateHeaderComponent();
-}
-
+    this.changeDetectorRefs.detectChanges();
+  }
 
   loadPokemons(): void {
     this.pokemonService.getPokemons().subscribe((pokemons: PokemonDetails[]) => {
@@ -53,7 +51,6 @@ export class PokemonGridComponent implements OnInit {
       )));
     });
   }
-  
 
   createFilter(): (data: PokemonDetails, filter: string) => boolean {
     return (data, filter): boolean => {
@@ -81,32 +78,16 @@ export class PokemonGridComponent implements OnInit {
     });
   }
 
-
-
-  updateHeaderComponent() {
-    if (this.headerComponent) {
-        this.headerComponent.capturedPokemons = this.capturedPokemons;
+  togglePokemon(pokemon: PokemonDetails): void {
+    if (this.pokemonCaptureService.isCaptured(pokemon.id)) {
+      this.pokemonCaptureService.releasePokemon(pokemon.id);
+    } else {
+      this.pokemonCaptureService.capturePokemon(pokemon);
     }
-}
-
-togglePokemon(pokemon: PokemonDetails): void {
-  const index = this.capturedPokemons.findIndex(p => p.id === pokemon.id);
-  if (index === -1) {
-      if (this.capturedPokemons.length >= 6) {
-          this.capturedPokemons.shift(); 
-      }
-      this.capturedPokemons.push(pokemon); 
-  } else {
-      this.capturedPokemons.splice(index, 1); 
   }
-  this.updateHeaderComponent();
-}
-
-  isCaptured(pokemon: PokemonDetails): boolean {
-    return this.capturedPokemons.some(p => p.id === pokemon.id);
-  }
-
-
   
 
+  isCaptured(pokemonId: number): boolean {
+    return this.pokemonCaptureService.isCaptured(pokemonId);
+  }
 }
