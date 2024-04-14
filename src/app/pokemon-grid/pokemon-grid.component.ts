@@ -13,8 +13,10 @@ export class PokemonGridComponent implements OnInit {
   displayedColumns: string[] = ['number', 'image', 'name', 'type'];
   dataSource = new MatTableDataSource<PokemonDetails>();
   capturedPokemons: PokemonDetails[] = [];
-  uniqueTypes: string[] = [];  
+  uniqueTypes: string[] = [];
   maxCaptures = 6;
+  currentNameFilter: string = '';
+  currentTypeFilter: string = '';
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -23,6 +25,7 @@ export class PokemonGridComponent implements OnInit {
   ngOnInit() {
     this.loadPokemons();
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filterPredicate = this.createFilter();
   }
 
   loadPokemons(): void {
@@ -41,22 +44,32 @@ export class PokemonGridComponent implements OnInit {
   }
   
 
+  createFilter(): (data: PokemonDetails, filter: string) => boolean {
+    return (data, filter): boolean => {
+      const searchTerms = JSON.parse(filter);
+      return data.name.toLowerCase().indexOf(searchTerms.name.toLowerCase()) !== -1 &&
+             (searchTerms.type ? data.types.some(t => t.type.name.toLowerCase().indexOf(searchTerms.type.toLowerCase()) !== -1) : true);
+    };
+  }
+
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.currentNameFilter = filterValue;
+    this.applyFilters();
   }
 
   applyTypeFilter(type: string): void {
-    if (type) {
-      this.dataSource.filterPredicate = (data: PokemonDetails, filter: string) => 
-        data.types.some(t => t.type.name.toLowerCase().includes(filter.toLowerCase()));
-      this.dataSource.filter = type;
-    } else {
-      this.dataSource.filter = ''; 
-    }
+    this.currentTypeFilter = type;
+    this.applyFilters();
   }
-  
-  
+
+  applyFilters(): void {
+    this.dataSource.filter = JSON.stringify({
+      name: this.currentNameFilter,
+      type: this.currentTypeFilter
+    });
+  }
+
 
 
 
