@@ -26,15 +26,17 @@ export class PokemonGridComponent implements OnInit {
   }
 
   loadPokemons(): void {
-    this.pokemonService.getPokemons().subscribe(pokemons => {
+    this.pokemonService.getPokemons().subscribe((pokemons: PokemonDetails[]) => {
       this.dataSource.data = pokemons.map(pokemon => ({
         id: pokemon.id,
         name: pokemon.name,
         image: pokemon.sprites.versions['generation-v']['black-white'].animated.front_default,
-        types: pokemon.types,  
+        types: pokemon.types,
         sprites: pokemon.sprites
       }));
-      this.uniqueTypes = Array.from(new Set(pokemons.flatMap(p => p.types.map(t => t.type.name))));
+      this.uniqueTypes = Array.from(new Set(pokemons.flatMap(pokemon => 
+        pokemon.types.map(type => type.type.name)
+      )));
     });
   }
   
@@ -46,14 +48,14 @@ export class PokemonGridComponent implements OnInit {
 
   applyTypeFilter(type: string): void {
     if (type) {
-      this.dataSource.filterPredicate = (data: PokemonDetails, filter: string) => {
-        return data.types.some(t => t.type.name.toLowerCase().includes(filter.toLowerCase()));
-      };
+      this.dataSource.filterPredicate = (data: PokemonDetails, filter: string) => 
+        data.types.some(t => t.type.name.toLowerCase().includes(filter.toLowerCase()));
       this.dataSource.filter = type;
     } else {
-      this.loadPokemons();  // Reload original data
+      this.dataSource.filter = ''; 
     }
   }
+  
   
 
 

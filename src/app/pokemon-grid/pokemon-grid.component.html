@@ -1,12 +1,13 @@
 <div class="search-controls">
   <input
     matInput
-    placeholder="Buscar por nombre..."
+    placeholder="Search by Name..."
     (keyup)="applyFilter($event)"
   >
-  <mat-form-field appearance="fill">
-    <mat-label>Tipo</mat-label>
-    <mat-select (selectionChange)="applyTypeFilter($event.value)">
+  <mat-form-field appearance="fill" *ngIf="uniqueTypes.length > 0"> 
+    <mat-label>Type</mat-label>
+    <mat-select (selectionChange)="applyTypeFilter($event.value)" placeholder="Select">
+      <mat-option value="">Seleccione</mat-option>
       <mat-option *ngFor="let type of uniqueTypes" [value]="type">
         {{ type }}
       </mat-option>
