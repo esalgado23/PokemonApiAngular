@@ -1,35 +1,51 @@
-  
 
-.example-container {
-  flex: auto;
-  overflow: auto;
+.capitalize {
+  text-transform: lowercase;
 }
 
-.mat-table {
-  width: 100%;
+.capitalize::first-letter {
+  text-transform: uppercase;
 }
 
-/* Estilos para la tabla */
+.pokemon-table th, .pokemon-table td {
+  width: 25%; /* Ajusta este valor según el número de columnas que tengas */
+  overflow: hidden; /* Asegura que el contenido no se desborde */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+  white-space: nowrap; /* Evita que el texto se envuelva a la línea siguiente */
+}
+
+.pokemon-table mat-cell, .pokemon-table mat-header-cell {
+  flex: 1 1 auto; /* Esto permite que las celdas se expandan para ocupar el espacio disponible */
+  width: 100%; /* Esto establece el ancho de las celdas al 100% */
+  box-sizing: border-box; /* Esto asegura que el padding y el borde de las celdas no aumenten su tamaño total */
+}
+/* Estilos para la tabla*/
+.pokemon-table mat-row, .pokemon-table mat-header-row {
+  display: flex;
+}
+
+.pokemon-table {
+  width: 100%  !important;
+  border-collapse: collapse !important;
+
+}
+
+
+/* Encabezado */
 .pokemon-table mat-header-row {
-  text-align: center; 
-  background-color: #333; /* Color gris oscuro para el encabezado */
-  color: white; /* Texto blanco en el encabezado */
-  border-bottom: 1px solid #a7a7a7; /* Borde entre filas */
+  background-color: #333;
+  color: white;
 }
 
+/* Fila de datos */
 .pokemon-table mat-row {
-  text-align: center; 
-  background-color: #ffffff; 
-  color: rgb(29, 29, 29); 
-  padding: 8px; 
+  background-color: #ffffff;
+  color: rgb(29, 29, 29);
+  border-bottom: #c7c7c7   1px solid;
+  padding: 8px;
 }
 
-.pokemon-table mat-cell {
-  text-align: center; /* Alineación del texto al centro */
-  color: #55595C; /* Color de texto para las celdas */
-  background-color: rgb(255, 255, 255); /* Fondo blanco para las celdas */
-}
-
+/* Estilos para filas capturadas y hover */
 .pokemon-table mat-row.captured {
   background-color: #A2FCBC; /* Fondo verde para las filas capturadas */
 }
@@ -38,9 +54,11 @@
   background-color: #a1a1a1; /* Color gris al pasar el mouse sobre filas no capturadas */
 }
 
-.pokemon-table mat-row.captured:hover {
+.pokemon-table mat-row:hover {
   background-color: #92e8ab; /* Color verde claro al pasar el mouse sobre filas capturadas */
 }
+
+
 
 
 
