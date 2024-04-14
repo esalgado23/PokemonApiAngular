@@ -1,0 +1,13 @@
+.background-container {
+    background: url('https://assets.pokemon.com/static2/_ui/img/chrome/container_bg.png') repeat fixed;
+    min-height: 96vh; /* Asegura que el contenedor tenga al menos el largo de la ventana */
+    width: 100%; /* Asegura que el contenedor cubra el ancho completo */
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+  }
+  
+  .content-container {
+    width: 50%; /* Controla el ancho del contenido interior */
+    padding: 20px; /* Añade algo de espacio alrededor del contenido */
+  }
+  

@@ -9,19 +9,14 @@
   width: 100%;
 }
 
-.pokemon-table {
-  width: 100%;
-}	
-
-
 /* Estilos para la tabla */
-.pokemon-table mat-header-row{
+.pokemon-table mat-header-row {
   text-align: center; 
   background-color: #333; /* Color gris oscuro para el encabezado */
   color: white; /* Texto blanco en el encabezado */
   border-bottom: 1px solid #a7a7a7; /* Borde entre filas */
-
 }
+
 .pokemon-table mat-row {
   text-align: center; 
   background-color: #ffffff; 
@@ -40,17 +35,56 @@
 }
 
 .pokemon-table mat-row:not(.captured):hover {
-  background-color: #a1a1a1; /* Color al pasar el mouse sobre las filas */
+  background-color: #a1a1a1; /* Color gris al pasar el mouse sobre filas no capturadas */
 }
 
-.pokemon-table mat-row:hover {
-  background-color: #ffb4b4; /* Color al pasar el mouse sobre las filas */
-}
-
-
-.captured {
-  background-color: #A2FCBC; /* Fondo verde para indicar que el Pokémon está capturado */
+.pokemon-table mat-row.captured:hover {
+  background-color: #92e8ab; /* Color verde claro al pasar el mouse sobre filas capturadas */
 }
 
 
+
+
+.search-controls {
+  display: flex;
+  gap: 8px; /* Espacio entre los controles */
+}
+
+.search-input,
+.search-select {
+  flex: 1; /* Hace que ambos controles tomen el mismo espacio */
+}
+
+.mat-form-field {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #666; /* Cambia el color de la línea de enfoque */
+}
+
+input.mat-input-element,
+.mat-select-value {
+  color: #333; /* Color de texto más oscuro */
+}
+
+.mat-form-field-label,
+.mat-option-text {
+  color: #666; /* Color de texto más oscuro para las etiquetas y opciones */
+}
+
+.mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: 12px; /* Padding interno para alinear el texto correctamente */
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0; /* Elimina el padding adicional en la parte inferior */
+}
+
+/* Estilos adicionales para el icono del select */
+.mat-select-arrow {
+  color: #666; /* Color del icono de la flecha */
+}
 
