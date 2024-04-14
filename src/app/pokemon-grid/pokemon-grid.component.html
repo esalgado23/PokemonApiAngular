@@ -40,6 +40,8 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.captured]="isCaptured(row)">
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.captured]="isCaptured(row)"
+      (click)="togglePokemon(row)">
   </tr>
 </table>

@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PokemonService } from '../pokemon.service';
 import { PokemonDetails } from '../pokemon-model';  
+import { HeaderComponent } from '../header/header.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-grid',
@@ -20,6 +22,10 @@ export class PokemonGridComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
+  @ViewChild(HeaderComponent, { static: false }) headerComponent!: HeaderComponent;
+
+  
+ 
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
@@ -27,6 +33,11 @@ export class PokemonGridComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = this.createFilter();
   }
+
+  ngAfterViewInit() {
+    this.updateHeaderComponent();
+}
+
 
   loadPokemons(): void {
     this.pokemonService.getPokemons().subscribe((pokemons: PokemonDetails[]) => {
@@ -72,19 +83,24 @@ export class PokemonGridComponent implements OnInit {
 
 
 
-
-
-  togglePokemon(pokemon: PokemonDetails): void {
-    const index = this.capturedPokemons.findIndex(p => p.id === pokemon.id);
-    if (index === -1) {
-      if (this.capturedPokemons.length >= this.maxCaptures) {
-        this.capturedPokemons.shift();  // Remove the oldest Pokemon if the max is reached
-      }
-      this.capturedPokemons.push(pokemon);  // Capture new Pokemon
-    } else {
-      this.capturedPokemons.splice(index, 1);  // Release captured Pokemon
+  updateHeaderComponent() {
+    if (this.headerComponent) {
+        this.headerComponent.capturedPokemons = this.capturedPokemons;
     }
+}
+
+togglePokemon(pokemon: PokemonDetails): void {
+  const index = this.capturedPokemons.findIndex(p => p.id === pokemon.id);
+  if (index === -1) {
+      if (this.capturedPokemons.length >= 6) {
+          this.capturedPokemons.shift(); 
+      }
+      this.capturedPokemons.push(pokemon); 
+  } else {
+      this.capturedPokemons.splice(index, 1); 
   }
+  this.updateHeaderComponent();
+}
 
   isCaptured(pokemon: PokemonDetails): boolean {
     return this.capturedPokemons.some(p => p.id === pokemon.id);

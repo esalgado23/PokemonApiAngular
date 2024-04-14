@@ -1,8 +1,11 @@
 <mat-toolbar class="custom-toolbar">
-        <span class="title">POKEDEX API</span>
-        <div class="circles-container">
-            <div *ngFor="let circle of [1, 2, 3, 4, 5, 6]" class="circle">
-                <div class="inner-circle"></div>
-            </div>
+    <span class="title">POKEDEX API</span>
+    <div class="circles-container">
+        <div *ngFor="let circle of [0, 1, 2, 3, 4, 5]" class="circle">
+            <div class="inner-circle"></div>
+            <img *ngIf="capturedPokemons.length > circle"
+                 [src]="capturedPokemons[circle].sprites.versions['generation-v']['black-white'].animated.front_default"
+                 class="pokemon-sprite">
         </div>
+    </div>
 </mat-toolbar>
