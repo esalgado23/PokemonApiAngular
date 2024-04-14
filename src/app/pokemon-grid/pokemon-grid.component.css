@@ -48,5 +48,9 @@
 }
 
 
+.captured {
+  background-color: #A2FCBC; /* Fondo verde para indicar que el Pokémon está capturado */
+}
+
 
 

@@ -13,6 +13,9 @@ export interface PokemonDetails {
       }
     }
   };
+  types: any[];
+  isCaptured?: boolean;  // Agrega esta línea
+}
   types: Array<{
     slot: number;
     type: {
@@ -20,7 +23,7 @@ export interface PokemonDetails {
       url: string;
     };
   }>;
-}
+
 
   export interface PokemonSprites {
     versions: {
